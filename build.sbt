@@ -11,13 +11,17 @@ resolvers ++= Seq(
   "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
 )
 
-lazy val methods = project.
-  settings(Common.settings: _*).
-  settings(libraryDependencies += Dependencies.scalaTest % Test)
-
 lazy val algods = project.
   settings(Common.settings: _*).
-  settings(libraryDependencies += Dependencies.scalaTest % Test)
+  settings(libraryDependencies += Dependencies.scalaTest % Test).
+  settings(libraryDependencies ++= Dependencies.scalanlp).
+  settings(libraryDependencies += Dependencies.scalaz)
+
+lazy val methods = project.
+  dependsOn(algods).
+  settings(Common.settings: _*).
+  settings(libraryDependencies += Dependencies.scalaTest % Test).
+  settings(libraryDependencies ++= Dependencies.scalanlp)
 
 lazy val graphs = project.
   settings(Common.settings: _*).
