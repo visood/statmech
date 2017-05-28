@@ -1,0 +1,1 @@
+name := StatMechBuild.NamePrefix + "MolDyn"
