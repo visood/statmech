@@ -1,2 +1,6 @@
 Statistical Mechanics in the age of Data Analytics
 
+A multi-module project in Scala, using SBT.
+
+A set of Scala libraries for Statistical Mechanics. 
+
