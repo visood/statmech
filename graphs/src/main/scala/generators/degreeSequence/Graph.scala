@@ -6,28 +6,29 @@ object Graph{
   type AS = Map[Int, Set[Int]]
 
 	def vertexes(al: AL): IndexedSeq[Int] =
-    (al.keys ++ al.values.flatten).toIndexedSeq
+      (al.keys ++ al.values.flatten).toIndexedSeq
 
 	def vertexes(links: IndexedSeq[(Int, Int)]): IndexedSeq[Int] =
-    (for( (x, y) <- links) yield List(x,y)).flatten.distinct.sorted
+      (for( (x, y) <- links) yield List(x,y)).flatten.distinct.sorted
 
   def degrees(al: AL): Map[Int, Int] = al.map {
     case (x, nx) => (x, nx.length)
   }.toMap
 
 	def emptyAL: AL = Map[Int, IndexedSeq[Int]]().withDefault(
-    (i: Int) => IndexedSeq[Int] ()
+      (i: Int) => IndexedSeq[Int] ()
   )
 
   def nonbrAL(vs: IndexedSeq[Int]): AL =
     ( (for(v <- vs) yield(v, IndexedSeq[Int]())) ).toMap
 
-	def makeLink(x: Int, y: Int): (Int, Int) = if (x < y) (x, y) else (y, x) //what is x == y?
+  def makeLink(x: Int, y: Int): (Int, Int) =
+    if (x < y) (x, y) else (y, x) //what is x == y?
 	
-	def linksAdded(al: AL)( links: (Int, Int)*): AL = 
-		(al /: links) {
+  def linksAdded(al: AL)( links: (Int, Int)*): AL =
+	(al /: links) {
       case (al1, (x, y)) => al1 ++ Seq( x -> (al1(x) :+ y),
-                                        y -> (al1(y) :+ x))
+        y -> (al1(y) :+ x))
     }
 
   def adjListForLinks(links: IndexedSeq[(Int, Int)]): AL =
@@ -65,7 +66,7 @@ object Graph{
     }.toIndexedSeq
 	
 
-	trait GraphTraversal
+  trait GraphTraversal
   {
 		//def nbrs( x: Int): List[Int]
 		def nbrs: Int => List[Int]
@@ -81,7 +82,7 @@ object Graph{
 		def from(x: Int): List[Int] = grow( List(x), Set(x))
 	}
 
-	class BreadthFirstTraversal(val nbrs: Int => List[Int]) extends GraphTraversal
+  class BreadthFirstTraversal(val nbrs: Int => List[Int]) extends GraphTraversal
   {
 		def insert(zs: List[Int])( ys: Int*): List[Int] = zs ++ ys
 
@@ -106,7 +107,7 @@ object Graph{
 			collect(this.from(x).tail, Map(x -> List(x)))
 		}
 	}
-	object BreadthFirstTraversal {
+  object BreadthFirstTraversal {
     def apply(nbrs: Int => List[Int]): BreadthFirstTraversal =
       new BreadthFirstTraversal(nbrs)
     def apply(adjlist: AL): BreadthFirstTraversal =
