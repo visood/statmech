@@ -1,0 +1,4 @@
+#+TITLE: Statistical Mechanics
+
+We explore statistical mechanics in the age of data analytics,
+using the latest advances in programming data intensive applications.
